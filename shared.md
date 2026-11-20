@@ -123,6 +123,17 @@ KamWithK/AnkiconnectAndroid     --pr------>  AnkiQuest/AnkiQuestconnectAndroid m
 - **Third-party app forks** (garmankiquest, ankiquest-android-mcp, AnkiQuestconnectAndroid): the default branch is our version, with CI, Nix and the AnkiQuest API library `org.ankiquest:api` (coming). The branches `ankidroid-provider-check` and `ankiquest-support` stay ready to propose upstream: upstream's style and languages, no AnkiQuest-only changes. Keep upstream's languages for upstream's code in every fork.
 - **Sync job** (AnkiQuest-Sync, daily and on demand): mirror mode fast-forwards a mirror and opens an issue if it has commits of its own; pr mode opens one pull request from upstream. The `watch` job opens an issue in the fork a watched source feeds when it moves past the reviewed commit or version: JSchoreels/anki, JSchoreels/fsrs-rs, open-spaced-repetition/fsrs-rs, kuma3's core, backend and app, and new upstream backend versions (`watched.json`). The `agents` job opens the `AGENTS.md` pull requests.
 
+## Licence
+
+Every AnkiQuest repository is under the AGPL wherever its upstream allows it (hill, 2026-11-20).
+
+- Our code and every new repository are AGPL-3.0-or-later: a `LICENSE` with the AGPL text, and the license field set wherever a manifest has one (`Cargo.toml`, `package.json`, `pyproject.toml`). AnkiQuest-Server, AnkiQuest-Desktop and the AnkiQuest code in AnkiQuest-Android are AGPL-3.0-only today; they keep that, in new files too, until hill decides in AnkiQuest/AnkiQuest-Server#95.
+- In forks, upstream code keeps its licence and notices. Our additions are AGPL-3.0-or-later where upstream's licence allows combining them: GPL-3.0 and AGPL-3.0 do (GPLv3 section 13). With a permissive upstream (MIT, BSD, Apache-2.0), our files are AGPL-3.0-or-later and upstream's notices stay.
+- Branches meant for upstream (`ankiquest-support`, `ankidroid-provider-check`, the `upstream/*` pull request branches) use upstream's licence.
+- Exception: the API library that third-party apps link (`api/` in AnkiQuest-Android, published as `org.ankiquest:api`) stays LGPL-3.0-or-later, AnkiDroid's licence for it, so apps under any licence can use it. Our changes to it are LGPL-3.0-or-later too; never move AGPL code into it.
+- Poses keep the licence of their masters: Anki-tan's are CC BY-SA 4.0 (`static/anki-tan/LICENSE` in AnkiQuest-Server, by Shigeyuki), the other companions' fall under AnkiQuest-Server's licence. Don't change the licensing of a pose; that is hill's decision.
+- SPDX headers (`SPDX-License-Identifier: AGPL-3.0-or-later`) go in new files where the repository already uses them, such as AnkiQuest-Android. Don't add or change headers in upstream files in bulk.
+
 ## Desktop and Android parity
 
 AnkiQuest has two clients: the Android app ([AnkiQuest/AnkiQuest-Android](https://github.com/AnkiQuest/AnkiQuest-Android)) and the Anki desktop add-on (`addon/` in [AnkiQuest/AnkiQuest-Desktop](https://github.com/AnkiQuest/AnkiQuest-Desktop)). A player should get the same AnkiQuest on both.
