@@ -6,18 +6,20 @@ These rules apply to every agent (Claude, Codex, others) and to people too, in e
 
 ## Repositories
 
-All under [github.com/AnkiQuest](https://github.com/AnkiQuest).
+All under [github.com/AnkiQuest](https://github.com/AnkiQuest). Every default branch is `master`.
 
 | Repository | Upstream | Purpose |
 |---|---|---|
 | AnkiQuest-Server | none | The server (Rust), its web pages (TypeScript), the API examples, the shared fixtures and the pose masters. |
 | AnkiQuest-Desktop | none | The Anki desktop add-on (Python). |
 | AnkiQuest-Android | ankidroid/Anki-Android | The Android app (Kotlin): AnkiDroid with AnkiQuest added. |
-| anki | ankitects/anki | Anki's core for the Android app, with our changes on `ankiquest`. |
-| AnkiQuest-Android-Backend | ankidroid/Anki-Android-Backend | The app's Rust backend, built from our anki; published to Maven Central. |
-| garmankiquest | sypianski/garmanki | Garmin watch app and its Android companion. |
-| ankiquest-android-mcp | ankimcp/ankidroid-mcp | MCP server on Android for AnkiDroid and AnkiQuest. |
-| AnkiQuestconnectAndroid | KamWithK/AnkiconnectAndroid | AnkiConnect on Android for AnkiDroid and AnkiQuest. |
+| AnkiQuest-Anki | ankitects/anki | Anki's core for the Android app: upstream plus RWKV and FSRS-7. |
+| AnkiQuest-Android-Backend | ankidroid/Anki-Android-Backend | The app's Rust backend, built from AnkiQuest-Anki; published to Maven Central. |
+| AnkiQuest-GarmAnki | sypianski/garmanki | Garmin watch app and its Android companion. |
+| AnkiQuest-Android-MCP | ankimcp/ankidroid-mcp | MCP server on Android for AnkiDroid and AnkiQuest. |
+| AnkiQuest-AnkiConnectAndroid | KamWithK/AnkiconnectAndroid | AnkiConnect on Android for AnkiDroid and AnkiQuest. |
+| AnkiQuest-Dev | none | The development environment: dev shells, pinned toolchains, shared Nix and the WSL host. |
+| AnkiQuest-Hosting | none | The server hosts' NixOS configuration. |
 | AnkiQuest-Sync | none | Scheduled jobs: fork sync, watched sources, `AGENTS.md` distribution. |
 | AnkiQuest-Agents | none | The source of every `AGENTS.md`. |
 | AnkiQuest.github.io | none | The art gallery (coming). |
@@ -105,23 +107,22 @@ Write new code in Rust, or TypeScript for the web, when the platform allows it. 
 ## Forks and wiring
 
 ```
-ankitects/anki                  --mirror-->  AnkiQuest/anki main
-                                             AnkiQuest/anki ankiquest
-                                                 | git submodule
-ankidroid/Anki-Android-Backend  --mirror-->  AnkiQuest/AnkiQuest-Android-Backend main
-                                             AnkiQuest/AnkiQuest-Android-Backend ankiquest
-                                                 | Maven Central: org.ankiquest:anki-backend-android
-ankidroid/Anki-Android          --pr------>  AnkiQuest/AnkiQuest-Android main  --HTTPS-->  AnkiQuest-Server
-                                                 | content provider, through org.ankiquest:api
-sypianski/garmanki              --pr------>  AnkiQuest/garmankiquest master
-ankimcp/ankidroid-mcp           --pr------>  AnkiQuest/ankiquest-android-mcp main
-KamWithK/AnkiconnectAndroid     --pr------>  AnkiQuest/AnkiQuestconnectAndroid master
+ankitects/anki                  --pr-->  AnkiQuest/AnkiQuest-Anki master
+                                             | git submodule
+ankidroid/Anki-Android-Backend  --pr-->  AnkiQuest/AnkiQuest-Android-Backend master
+                                             | Maven Central: org.ankiquest:anki-backend-android
+ankidroid/Anki-Android          --pr-->  AnkiQuest/AnkiQuest-Android master  --HTTPS-->  AnkiQuest-Server
+                                             | content provider, through org.ankiquest:api
+sypianski/garmanki              --pr-->  AnkiQuest/AnkiQuest-GarmAnki master
+ankimcp/ankidroid-mcp           --pr-->  AnkiQuest/AnkiQuest-Android-MCP master
+KamWithK/AnkiconnectAndroid     --pr-->  AnkiQuest/AnkiQuest-AnkiConnectAndroid master
 ```
 
-- **Core forks** (anki, AnkiQuest-Android-Backend): `main` mirrors upstream and only the sync job writes it. Our changes live on `ankiquest`: work from it and open pull requests against it. anki `ankiquest` is the Anki release AnkiDroid uses, plus the RWKV engine and FSRS-7 carried from JSchoreels' and kuma3's forks. AnkiQuest-Android-Backend `ankiquest` is the backend with its `anki` submodule on AnkiQuest/anki `ankiquest`; it publishes `org.ankiquest:anki-backend-android`, `anki-backend-core` and `anki-android-backend-testing` to Maven Central on a `*-ankiquest.*` tag. For each new Anki release AnkiDroid adopts, merge it forward into both `ankiquest` branches, then publish.
-- **App forks** (AnkiQuest-Android, garmankiquest, ankiquest-android-mcp, AnkiQuestconnectAndroid): the default branch carries our changes. Upstream comes in through the sync job's pull request, merged as a merge commit; never squash or rebase it.
-- **Third-party app forks** (garmankiquest, ankiquest-android-mcp, AnkiQuestconnectAndroid): the default branch is our version, with CI, Nix and the AnkiQuest API library `org.ankiquest:api` (coming). The branches `ankidroid-provider-check` and `ankiquest-support` stay ready to propose upstream: upstream's style and languages, no AnkiQuest-only changes. Keep upstream's languages for upstream's code in every fork.
-- **Sync job** (AnkiQuest-Sync, daily and on demand): mirror mode fast-forwards a mirror and opens an issue if it has commits of its own; pr mode opens one pull request from upstream. The `watch` job opens an issue in the fork a watched source feeds when it moves past the reviewed commit or version: JSchoreels/anki, JSchoreels/fsrs-rs, open-spaced-repetition/fsrs-rs, kuma3's core, backend and app, and new upstream backend versions (`watched.json`). The `agents` job opens the `AGENTS.md` pull requests.
+- **Every fork** has one branch of ours, `master`: upstream's default branch plus our changes, consolidated. Upstream comes in through the sync job's pull request, merged as a merge commit; never squash or rebase it. Work from `master` and open pull requests against it.
+- **Core forks** (AnkiQuest-Anki, AnkiQuest-Android-Backend): AnkiQuest-Anki `master` is ankitects/anki `main` plus the RWKV engine and FSRS-7 carried from JSchoreels' and kuma3's forks. AnkiQuest-Android-Backend `master` is upstream plus kuma3's backend wiring, with its `anki` submodule on a commit of AnkiQuest-Anki `master`; it publishes `org.ankiquest:anki-backend-android`, `anki-backend-core` and `anki-android-backend-testing` to Maven Central on a `*-ankiquest.*` tag.
+- **Third-party app forks** (AnkiQuest-GarmAnki, AnkiQuest-Android-MCP, AnkiQuest-AnkiConnectAndroid): `master` is our version, with CI, Nix and the AnkiQuest API library `org.ankiquest:api` (coming). The branches `ankidroid-provider-check` and `ankiquest-support` stay ready to propose upstream: upstream's style and languages, no AnkiQuest-only changes. Keep upstream's languages for upstream's code in every fork.
+- **Sync job** (AnkiQuest-Sync, daily and on demand): opens one pull request per fork from upstream's default branch, and lists the conflicting files. The `watch` job opens an issue in the fork a watched source feeds when it moves past the reviewed commit or version: JSchoreels/anki, JSchoreels/fsrs-rs, open-spaced-repetition/fsrs-rs, kuma3's core, backend and app, and new upstream backend versions (`watched.json`). The `agents` job opens the `AGENTS.md` pull requests.
+- **Shared Nix and CI.** Dev shells, pinned toolchains and the formatter come from AnkiQuest-Dev; a repository's `flake.nix` takes it as an input instead of pinning its own. Workflows used by more than one repository are reusable workflows in AnkiQuest-Dev (`.github/workflows/`), called with `uses: AnkiQuest/AnkiQuest-Dev/.github/workflows/<name>.yml@master`.
 
 ## Licence
 

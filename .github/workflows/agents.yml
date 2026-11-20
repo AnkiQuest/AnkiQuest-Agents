@@ -1,11 +1,11 @@
-# Checks the instruction files and, on main, asks AnkiQuest-Sync to
+# Checks the instruction files and, on master, asks AnkiQuest-Sync to
 # distribute them (its "agents" job).
 name: Agents
 
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
   merge_group:
   workflow_dispatch:
