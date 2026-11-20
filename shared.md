@@ -20,6 +20,7 @@ All under [github.com/AnkiQuest](https://github.com/AnkiQuest).
 | AnkiQuestconnectAndroid | KamWithK/AnkiconnectAndroid | AnkiConnect on Android for AnkiDroid and AnkiQuest. |
 | AnkiQuest-Sync | none | Scheduled jobs: fork sync, watched sources, `AGENTS.md` distribution. |
 | AnkiQuest-Agents | none | The source of every `AGENTS.md`. |
+| AnkiQuest-Dev | none | The development environment: dev shells, toolchain pins, NixOS on WSL, NixOS and nix-darwin modules, Windows and dev container setup. |
 | AnkiQuest.github.io | none | The art gallery (coming). |
 
 ## People
