@@ -1,0 +1,51 @@
+# Checks the instruction files and, on main, asks AnkiQuest-Sync to
+# distribute them (its "agents" job).
+name: Agents
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  merge_group:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      # shared.md has no "This repository" heading; each section starts with
+      # it and has no other second-level heading.
+      - name: Check the split point
+        run: |
+          status=0
+          if grep -qx '## This repository' shared.md; then
+            echo "::error file=shared.md::shared.md must not contain '## This repository'."
+            status=1
+          fi
+          for f in repos/*.md; do
+            if [ "$(head -n1 "$f")" != '## This repository' ] || [ "$(grep -c '^## ' "$f")" != 1 ]; then
+              echo "::error file=$f::Must start with '## This repository' and have no other '## ' heading."
+              status=1
+            fi
+          done
+          exit $status
+
+  dispatch:
+    needs: check
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Ask AnkiQuest-Sync to distribute
+        env:
+          GH_TOKEN: ${{ secrets.SYNC_DISPATCH_TOKEN }}
+        run: gh api repos/AnkiQuest/AnkiQuest-Sync/dispatches -f event_type=agents-changed
