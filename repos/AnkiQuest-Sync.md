@@ -6,4 +6,4 @@ AnkiQuest-Sync holds AnkiQuest's scheduled GitHub Actions jobs. It has no code o
 - **Token.** Every job writes to other repositories with `FORK_SYNC_TOKEN`; `GITHUB_TOKEN` can't. Never print it. Its scopes are listed in the README; widen them there when a job needs a new repository.
 - **Never force-push** or write a fork's `master` directly; everything goes through a pull request or an issue.
 - **Shell.** Keep each step a few lines of glue. Logic that grows beyond that moves to a Rust tool in this repository.
-- **Checks to run** before pushing: `actionlint` on the changed workflows; run the job by hand (Run workflow) after merging.
+- **Checks to run** before pushing: `nix develop -c actionlint` (the `check` workflow runs it too); run the job by hand (Run workflow) after merging.
