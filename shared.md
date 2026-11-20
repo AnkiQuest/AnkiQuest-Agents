@@ -96,17 +96,17 @@ ankitects/anki                  --mirror-->  AnkiQuest/anki main
                                                  | git submodule
 ankidroid/Anki-Android-Backend  --mirror-->  AnkiQuest/AnkiQuest-Android-Backend main
                                              AnkiQuest/AnkiQuest-Android-Backend ankiquest
-                                                 | Maven Central: org.ankiquest:anki-backend-android
+                                                 | Maven Central: org.ankiquest.anki:anki-backend-android
 ankidroid/Anki-Android          --pr------>  AnkiQuest/AnkiQuest-Android main  --HTTPS-->  AnkiQuest-Server
-                                                 | content provider, through org.ankiquest:api
+                                                 | content provider, through org.ankiquest.anki:api
 sypianski/garmanki              --pr------>  AnkiQuest/garmankiquest master
 ankimcp/ankidroid-mcp           --pr------>  AnkiQuest/ankiquest-android-mcp main
 KamWithK/AnkiconnectAndroid     --pr------>  AnkiQuest/AnkiQuestconnectAndroid master
 ```
 
-- **Core forks** (anki, AnkiQuest-Android-Backend): `main` mirrors upstream and only the sync job writes it. Our changes live on `ankiquest`: work from it and open pull requests against it. anki `ankiquest` is the Anki release AnkiDroid uses, plus the RWKV engine and FSRS-7 carried from JSchoreels' and kuma3's forks. AnkiQuest-Android-Backend `ankiquest` is the backend with its `anki` submodule on AnkiQuest/anki `ankiquest`; it publishes `org.ankiquest:anki-backend-android`, `anki-backend-core` and `anki-android-backend-testing` to Maven Central on a `*-ankiquest.*` tag. For each new Anki release AnkiDroid adopts, merge it forward into both `ankiquest` branches, then publish.
+- **Core forks** (anki, AnkiQuest-Android-Backend): `main` mirrors upstream and only the sync job writes it. Our changes live on `ankiquest`: work from it and open pull requests against it. anki `ankiquest` is the Anki release AnkiDroid uses, plus the RWKV engine and FSRS-7 carried from JSchoreels' and kuma3's forks. AnkiQuest-Android-Backend `ankiquest` is the backend with its `anki` submodule on AnkiQuest/anki `ankiquest`; it publishes `org.ankiquest.anki:anki-backend-android`, `anki-backend-core` and `anki-android-backend-testing` to Maven Central on a `*-ankiquest.*` tag. For each new Anki release AnkiDroid adopts, merge it forward into both `ankiquest` branches, then publish.
 - **App forks** (AnkiQuest-Android, garmankiquest, ankiquest-android-mcp, AnkiQuestconnectAndroid): the default branch carries our changes. Upstream comes in through the sync job's pull request, merged as a merge commit; never squash or rebase it.
-- **Third-party app forks** (garmankiquest, ankiquest-android-mcp, AnkiQuestconnectAndroid): the default branch is our version, with CI, Nix and the AnkiQuest API library `org.ankiquest:api` (coming). The branches `ankidroid-provider-check` and `ankiquest-support` stay ready to propose upstream: upstream's style and languages, no AnkiQuest-only changes. Keep upstream's languages for upstream's code in every fork.
+- **Third-party app forks** (garmankiquest, ankiquest-android-mcp, AnkiQuestconnectAndroid): the default branch is our version, with CI, Nix and the AnkiQuest API library `org.ankiquest.anki:api` (coming). The branches `ankidroid-provider-check` and `ankiquest-support` stay ready to propose upstream: upstream's style and languages, no AnkiQuest-only changes. Keep upstream's languages for upstream's code in every fork.
 - **Sync job** (AnkiQuest-Sync, daily and on demand): mirror mode fast-forwards a mirror and opens an issue if it has commits of its own; pr mode opens one pull request from upstream. The `watch` job opens an issue in the fork a watched source feeds when it moves past the reviewed commit or version: JSchoreels/anki, JSchoreels/fsrs-rs, open-spaced-repetition/fsrs-rs, kuma3's core, backend and app, and new upstream backend versions (`watched.json`). The `agents` job opens the `AGENTS.md` pull requests.
 
 ## Desktop and Android parity
