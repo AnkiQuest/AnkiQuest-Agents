@@ -88,6 +88,12 @@ Write new code in Rust, or TypeScript for the web, when the platform allows it. 
 - No emoji in commits, pull requests, issues or comments.
 - Never commit secrets, tokens or personal data. Secrets live on the servers, outside the repositories.
 
+## Reviews
+
+- Review nitpicky and critical, and think every change through, security above all. Raise every nitpick, and request changes as many times as it takes to get it right.
+- When your own work is under review, address every nitpick before merging.
+- Ask hill for advice on implementation details.
+
 ## Forks and wiring
 
 ```
