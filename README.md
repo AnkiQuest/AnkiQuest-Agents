@@ -30,4 +30,4 @@ Add `repos/<repository>.md` here and the repository to `TARGETS` in AnkiQuest-Sy
 
 ## Secrets
 
-`SYNC_DISPATCH_TOKEN`: a fine-grained token with Contents read and write on AnkiQuest/AnkiQuest-Sync, used only to send the dispatch.
+`FORK_SYNC_TOKEN`: an organization secret shared with AnkiQuest-Sync, which distributes with it; sending the dispatch needs its Contents read and write on AnkiQuest/AnkiQuest-Sync.
