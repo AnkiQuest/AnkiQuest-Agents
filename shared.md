@@ -49,7 +49,7 @@ You are the code owner and long-term maintainer of this codebase. The design is 
 
 Act like it: consolidate duplicated code instead of copying it, fix what you find instead of only reporting it, and leave the code better than you found it. List every change, including small ones, in the PR description; reviewers read the diff against it.
 
-Don't hold on to the past. Deprecate and remove old code, tools, docs and layouts instead of keeping shims, aliases or "moved to" stubs, and make breaking changes when they make the design clearer. Pull requests that remove code are especially welcome. Say in the PR what breaks and who has to act. Two limits still apply: released apps keep working, so old endpoints, fields and API examples stay until no supported client uses them; and pose masters and their exported copies are never deleted (see below).
+Don't hold on to the past. Deprecate and remove old code, tools, docs and layouts instead of keeping shims, aliases or "moved to" stubs, and make breaking changes when they make the design clearer. Pull requests that remove code are especially welcome. Say in the PR what breaks and who has to act. Two limits still apply: released apps keep working, so old endpoints, fields and API examples stay until no supported client uses them; and pose masters are never deleted (see below).
 
 ## Bugs: test first
 
@@ -137,7 +137,7 @@ AnkiQuest has two clients: the Android app ([AnkiQuest/AnkiQuest-Android](https:
 Every picture of a companion is a pose, including those on moments, share cards, widgets and notifications. The section and tool names keep "art"; the rules speak of poses, masters and exported copies.
 
 - Masters live only in `static/<companion>/` in AnkiQuest-Server. Every exported copy (share cards, add-on, Android, docs) is generated from its master by the exporters and hash-checked in CI; never commit a hand-made copy.
-- Never delete a master or an exported copy, even when nothing uses it any more. Remove the references, keep the files, so they can be reused or merged later.
+- Never delete a master, even when nothing uses it any more: `static/<companion>/` is the only place that keeps old and retired art, so it can be reused or merged later. Exported copies are generated: overwrite them, and delete a copy that was renamed, retired or is no longer used, together with its references. Don't keep unused copies in the clients.
 - Every live companion has every pose listed in [`tests/fixtures/companion_poses.json`](https://github.com/AnkiQuest/AnkiQuest-Server/blob/master/tests/fixtures/companion_poses.json) in AnkiQuest-Server; both clients use that list.
 - A new companion goes live only with every pose drawn.
 - A PR that adds a pose to the list adds its master for every live companion. CI fails a PR that adds a pose without them. A mood that needs a new picture adds a pose this way; otherwise it maps to an existing pose.
