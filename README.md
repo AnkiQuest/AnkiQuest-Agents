@@ -11,7 +11,7 @@ Open a pull request here; it merges under the shared rules. Never edit `AGENTS.m
 
 ## Generation
 
-AnkiQuest-Sync's `agents` job runs daily, on demand, and when this repository's `main` changes (a `repository_dispatch` of type `agents-changed`, sent by `.github/workflows/agents.yml`). For each repository in its `TARGETS` map it writes:
+AnkiQuest-Sync's `agents` job runs daily, on demand, and when this repository's `master` changes (a `repository_dispatch` of type `agents-changed`, sent by `.github/workflows/agents.yml`). For each repository in its `TARGETS` map it writes:
 
 - `AGENTS.md` = `shared.md`, a blank line, `repos/<repository>.md`.
 - `CLAUDE.md` = `@AGENTS.md`. A fork whose upstream has its own `CLAUDE.md` keeps it, with `@AGENTS.md` added as its first line.
