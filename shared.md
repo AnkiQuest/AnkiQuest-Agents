@@ -93,6 +93,7 @@ Write new code in Rust, or TypeScript for the web, when the platform allows it. 
 - Review nitpicky and critical, and think every change through, security above all. Raise every nitpick, and request changes as many times as it takes to get it right.
 - When your own work is under review, address every nitpick before merging.
 - Ask hill for advice on implementation details.
+- With nothing to say about a change, say nothing: approve it, or improve it yourself, without a comment that restates it.
 
 ## Forks and wiring
 
@@ -139,6 +140,6 @@ Every picture of a companion is a pose, including those on moments, share cards,
 
 ## Writing
 
-Write comments, commit messages, issues and PR descriptions with as few words as needed. No praise, no filler, no superlatives. Em dashes take no spaces around them.
+Write comments, commit messages, issues, reviews and PR descriptions with as few words as needed. If you have something to say, say it; if not, say nothing. Say each thing once. No praise, no filler, no superlatives. Em dashes take no spaces around them.
 
 Mannered prose substitutes metaphor and flourish for direct statement. Instead of "a parameter worth varying," the mannered writer produces "a dial worth turning." Instead of "this point still matters," they write "this point earns its keep." The phrases exist to display the writer, not to convey the idea, and readers can tell. That is why mannered prose irritates: it makes the reader work harder so the writer can perform. It is also imprecise. Metaphors drag in connotations the writer did not choose and cannot control. The fix is to say what you mean. When a literal phrase is available, use it.
