@@ -127,8 +127,8 @@ KamWithK/AnkiconnectAndroid     --pr------>  AnkiQuest/AnkiQuestconnectAndroid m
 
 Every AnkiQuest repository is under the AGPL wherever its upstream allows it (hill, 2026-11-20).
 
-- Our code and every new repository are AGPL-3.0-or-later: a `LICENSE` with the AGPL text, and the license field set wherever a manifest has one (`Cargo.toml`, `package.json`, `pyproject.toml`). AnkiQuest-Server, AnkiQuest-Desktop and the AnkiQuest code in AnkiQuest-Android are AGPL-3.0-only today; they keep that, in new files too, until hill decides in AnkiQuest/AnkiQuest-Server#95.
-- In forks, upstream code keeps its licence and notices. Our additions are AGPL-3.0-or-later where upstream's licence allows combining them: GPL-3.0 and AGPL-3.0 do (GPLv3 section 13). With a permissive upstream (MIT, BSD, Apache-2.0), our files are AGPL-3.0-or-later and upstream's notices stay.
+- Our code and every new repository are AGPL-3.0-or-later: a `LICENSE` with the AGPL text, and the license field set wherever a manifest has one (`Cargo.toml`, `package.json`, `pyproject.toml`).
+- In forks, upstream code keeps its licence and notices. Our additions are AGPL-3.0-or-later where upstream's licence allows combining them: GPL-3.0 and AGPL-3.0 do (GPLv3 section 13). With a permissive upstream (MIT, BSD, Apache-2.0), our files are AGPL-3.0-or-later and upstream's notices stay. The fork's README or `NOTICE` says which files are ours and which are upstream's.
 - Branches meant for upstream (`ankiquest-support`, `ankidroid-provider-check`, the `upstream/*` pull request branches) use upstream's licence.
 - Exception: the API library that third-party apps link (`api/` in AnkiQuest-Android, published as `org.ankiquest:api`) stays LGPL-3.0-or-later, AnkiDroid's licence for it, so apps under any licence can use it. Our changes to it are LGPL-3.0-or-later too; never move AGPL code into it.
 - Poses keep the licence of their masters: Anki-tan's are CC BY-SA 4.0 (`static/anki-tan/LICENSE` in AnkiQuest-Server, by Shigeyuki), the other companions' fall under AnkiQuest-Server's licence. Don't change the licensing of a pose; that is hill's decision.
