@@ -47,5 +47,5 @@ jobs:
     steps:
       - name: Ask AnkiQuest-Sync to distribute
         env:
-          GH_TOKEN: ${{ secrets.SYNC_DISPATCH_TOKEN }}
+          GH_TOKEN: ${{ secrets.FORK_SYNC_TOKEN }}
         run: gh api repos/AnkiQuest/AnkiQuest-Sync/dispatches -f event_type=agents-changed
