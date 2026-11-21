@@ -19,7 +19,7 @@ All under [github.com/AnkiQuest](https://github.com/AnkiQuest). Every default br
 | AnkiQuest-Android-MCP | ankimcp/ankidroid-mcp | MCP server on Android for AnkiDroid and AnkiQuest. |
 | AnkiQuest-AnkiConnectAndroid | KamWithK/AnkiconnectAndroid | AnkiConnect on Android for AnkiDroid and AnkiQuest. |
 | AnkiQuest-Dev | none | The development environment: dev shells, toolchain pins, shared workflows and label set, NixOS on WSL, NixOS and nix-darwin modules, Windows and dev container setup. |
-| AnkiQuest-Hosting | none | The NixOS configuration of the aws host that serves ankiquest.org; a submodule of float3/nixos at `nixos/hosts/aws`. |
+| AnkiQuest-Hosting | none | The NixOS configuration of the host that serves ankiquest.org (private); a submodule of float3/nixos. |
 | AnkiQuest-Sync | none | Scheduled jobs: fork sync, watched sources, `AGENTS.md` distribution. |
 | AnkiQuest-Agents | none | The source of every `AGENTS.md`. |
 | AnkiQuest.github.io | none | The art gallery (coming). |
@@ -84,6 +84,7 @@ Write new code in Rust, or TypeScript for the web, when the platform allows it. 
 - Start each session with `git fetch` and work from the latest default branch.
 - Never push to the default branch; open a pull request.
 - Pull requests by hill or Claude need an approving review from Aldana or Astra (the AldanaBRZ account). Pull requests by Aldana or Astra need an approving review from hill or Claude (the float3 account). One approval from the other side is enough; merge only once it is given and every check is green on the final commit. hill may merge trivially correct changes (documentation, AGENTS.md, README, labels, search and replace) without that review. The "Update AGENTS.md from AnkiQuest-Agents" pull requests opened by AnkiQuest-Sync need no review: the rules were reviewed here, in AnkiQuest-Agents (hill, 2026-11-20).
+- AnkiQuest-Server, AnkiQuest-Desktop and AnkiQuest-Android merge through the merge queue on `master`, with the same settings: merge method Merge, build concurrency 5, group size 1 to 5, wait 5 minutes for the minimum group size, "Only merge non-failing pull requests", status check timeout 360 minutes (merge-group runs take up to four hours), and "Require branches to be up to date before merging" off, since the queue tests every pull request on top of the latest `master` and the ones queued ahead of it. Review settings: one approval, stale approvals dismissed on push, conversations resolved before merging, merge commits only. A repository that adds a merge queue uses the same settings; a change to them is made in every such repository at once. Every workflow with a required check also runs on `merge_group`. A job that cannot run in a merge group is skipped there by an `if:` on the job, which counts as passing; a path or branch filter on the workflow would leave the check pending and stall the queue.
 - Commit messages: subject in the imperative, capitalised, at most 50 characters (72 hard limit), no full stop; a blank line; a body wrapped at 72 characters that explains what and why, not how.
 - Name every model that did the work, the way ankidroid/Anki-Android#23564 does (hill, 2026-11-20). Each commit ends with one `Assisted-by: <model> <reasoning effort>` trailer per model that worked on it, such as `Assisted-by: Claude Opus 5.5` or `Assisted-by: GPT-6.2-Sol xhigh`; leave out the effort when the tool has none. A pull request description starts with a note listing every model that worked on any of its commits:
 
@@ -97,6 +98,7 @@ Write new code in Rust, or TypeScript for the web, when the platform allows it. 
 - Never link to an agent session (such as `claude.ai/code/session_…`) in commits, pull requests, issues or comments.
 - No emoji in commits, pull requests, issues or comments.
 - Never commit secrets, tokens or personal data. Secrets live on the servers, outside the repositories.
+- AnkiQuest-Agents is public, so every `repos/<repository>.md` is public, including the sections of private repositories such as AnkiQuest-Hosting. They say what the repository is and how to work in it, and never name private hosts, addresses, ports, user names, secret paths, cloud account or region details, or the internal network layout.
 
 ## Reviews
 
