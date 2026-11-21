@@ -120,6 +120,8 @@ ankimcp/ankidroid-mcp           --pr-->  AnkiQuest/AnkiQuest-Android-MCP master
 KamWithK/AnkiconnectAndroid     --pr-->  AnkiQuest/AnkiQuest-AnkiConnectAndroid master
 ```
 
+The full, generated map of every repository, upstream, package, submodule and shared workflow, with pinned versions and what is out of date, is <https://ankiquest.github.io/wiring.mmd> (Mermaid source) and <https://ankiquest.github.io/wiring.html> (rendered); read it when a change crosses repositories.
+
 - **Every fork** has one branch of ours, `master`: upstream's default branch plus our changes, consolidated. Upstream comes in through the sync job's pull request, merged as a merge commit; never squash or rebase it. Work from `master` and open pull requests against it.
 - **Core forks** (AnkiQuest-Anki, AnkiQuest-Android-Backend): AnkiQuest-Anki `master` is ankitects/anki `main` plus the RWKV engine and FSRS-7 carried from JSchoreels' and kuma3's forks. AnkiQuest-Android-Backend `master` is upstream plus kuma3's backend wiring, with its `anki` submodule on a commit of AnkiQuest-Anki `master`; it publishes `org.ankiquest:anki-backend-android`, `anki-backend-core` and `anki-android-backend-testing` to Maven Central on a `*-ankiquest.*` tag.
 - **Third-party app forks** (AnkiQuest-GarmAnki, AnkiQuest-Android-MCP, AnkiQuest-AnkiConnectAndroid): `master` is our version, with CI, Nix and the AnkiQuest API library `org.ankiquest:api` (coming). The branches `ankidroid-provider-check` and `ankiquest-support` stay ready to propose upstream: upstream's style and languages, no AnkiQuest-only changes. Keep upstream's languages for upstream's code in every fork.
