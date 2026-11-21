@@ -51,7 +51,7 @@ You are the code owner and long-term maintainer of this codebase. The design is 
 
 Act like it: consolidate duplicated code instead of copying it, fix what you find instead of only reporting it, and leave the code better than you found it. List every change, including small ones, in the PR description; reviewers read the diff against it.
 
-Don't hold on to the past. Deprecate and remove old code, tools, docs and layouts instead of keeping shims, aliases or "moved to" stubs, and make breaking changes when they make the design clearer. Pull requests that remove code are especially welcome. Say in the PR what breaks and who has to act. Two limits still apply: released apps keep working, so old endpoints, fields and API examples stay until no supported client uses them; and pose masters are never deleted (see below).
+Don't hold on to the past. Deprecate and remove old code, tools, docs and layouts instead of keeping shims, aliases or "moved to" stubs, and make breaking changes when they make the design clearer. Pull requests that remove code are especially welcome. Say in the PR what breaks and who has to act. Two limits still apply: released apps keep working, so old endpoints, fields and API examples stay until no supported client uses them; and pose masters and the archived bytes of exported copies are never deleted (see below).
 
 ## Bugs: test first
 
@@ -165,9 +165,9 @@ The art is a matrix: companions by poses. The goal is a full matrix: every pose 
 ### Masters, archive and exported copies
 
 - Masters live only in `static/<companion>/` in AnkiQuest-Server, one file per pose.
-- `static/archive/` holds every picture that is not a current master, apart from them: `static/archive/<companion>/` for masters that were replaced, redrawn or retired, and `static/archive/anki-tan-pack/` for Shigeyuki's source pack, next to its licence; pack pictures no other companion will get stay there. Never delete a master or a picture that can't be regenerated: move it to the archive. The archive is never exported to a client.
+- `static/archive/` holds every picture that is not a current master, apart from them: `static/archive/<companion>/` for masters that were replaced, redrawn or retired, and for exported copies that were replaced or removed. Anki-tan's archive, including Shigeyuki's source pack, stays in `static/anki-tan/`, next to its licence; pack pictures no other companion will get stay there. Never delete a master, an archived picture or a picture that can't be regenerated: move it to the archive. The archive is never exported to a client.
 - Don't commit what a build can generate, such as smaller sizes of a master (`face-192`, `face-32`); generate them from the master, and don't archive them.
-- Every exported copy (share cards, add-on, Android, docs, gallery) is generated from its master by the exporters and hash-checked in CI; never commit a hand-made copy. Overwrite copies when their master changes, and delete a copy nothing uses, with its references; git history keeps old files. Generated copies are checked in only where a client's build still needs them; the goal is for every build to fetch them from AnkiQuest-Server instead, so binaries live in one repository.
+- Every exported copy (share cards, add-on, Android, docs, gallery) is generated from its master by the exporters and hash-checked in CI; never commit a hand-made copy. Overwrite copies when their master changes, and delete a copy nothing uses, with its references; first copy its exact bytes to the archive, with where it was used, the master and exporter it came from, and its licence (Aldana, 2026-11-20). Git history alone does not count as the archive. Identical bytes are archived once, with a manifest that records every original path. Generated copies are checked in only where a client's build still needs them; the goal is for every build to fetch them from AnkiQuest-Server instead, so binaries live in one repository.
 - The gallery (AnkiQuest.github.io) shows the matrix of all companions and poses, a page per companion with what it is missing and why, the licence of every picture, and the archive in a section of its own.
 
 ## Writing
