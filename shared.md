@@ -160,6 +160,7 @@ The art is a matrix: companions by poses. The goal is a full matrix: every pose 
 - A new companion goes live only with every core pose drawn. Ankilope, Bluma and Anki-tan stay live while their missing core poses are drawn (hill, 2026-11-21); until then each shows the fallback the fixture gives it. Drawing them comes first, in AnkiQuest/AnkiQuest-Server#57 (poses) and #116 (icons and moment pictures).
 - A PR that adds a pose to the list adds its master for every live companion; CI fails it otherwise. A mood that needs a new picture adds a pose this way; otherwise it maps to an existing pose.
 - No placeholder pictures: no stand-in, recoloured or borrowed picture for a missing pose. Bluma's poses recoloured from Ankilope's are the last ones and go once hers are drawn.
+- Framing (hill, 2026-11-21): `face` and the launcher icons are headshots, showing the face; every other pose, core moods included, is a full-body picture. A headshot or bust drawn for any other pose doesn't count as its master.
 - Every drawing still needed is recorded in an issue in AnkiQuest-Server (#57, #116), for Astra to draw and PR.
 
 ### Masters, archive and exported copies
