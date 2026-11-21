@@ -170,7 +170,7 @@ The art is a matrix: companions by poses. The goal is a full matrix: every pose 
 - The masters and the archive are to move to their own repository, AnkiQuest-Art (coming), which the code repositories take as a git submodule, so no code repository checks in art (hill, 2026-11-21). Until then they live in AnkiQuest-Server as described here.
 - Exported copies are never archived: when a master changes the exporters overwrite its copies, and a copy nothing uses is deleted; git history keeps the old bytes (hill, 2026-11-21).
 - Every exported copy (share cards, add-on, Android, docs, gallery) is generated from its master by the exporters and hash-checked in CI; never commit a hand-made copy. Generated copies are checked in only where a client's build still needs them; the goal is for every build to generate them from AnkiQuest-Art, so art is checked in only there.
-- The gallery (AnkiQuest.github.io) shows the matrix of all companions and poses, a page per companion with what it is missing and why, the licence of every picture, and the archive in a section of its own.
+- The gallery (AnkiQuest.github.io), built from AnkiQuest-Server's `art-coverage --json`, shows the matrix of all companions and poses, a page per companion with what it is missing and why, the licence of every picture, and the archive in a section of its own.
 
 ## Writing
 
