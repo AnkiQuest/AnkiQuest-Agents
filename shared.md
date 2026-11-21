@@ -165,9 +165,11 @@ The art is a matrix: companions by poses. The goal is a full matrix: every pose 
 ### Masters, archive and exported copies
 
 - Masters live only in `static/<companion>/` in AnkiQuest-Server, one file per pose.
-- `static/archive/` holds every picture that is not a current master, apart from them: `static/archive/<companion>/` for masters that were replaced, redrawn or retired, and `static/archive/anki-tan-pack/` for Shigeyuki's source pack, next to its licence; pack pictures no other companion will get stay there. Never delete a master or a picture that can't be regenerated: move it to the archive. The archive is never exported to a client.
+- `static/archive/` holds every picture that is no longer a current master: `static/archive/<companion>/` for masters that were replaced, redrawn or retired, and `static/archive/anki-tan-pack/` for Shigeyuki's source pack, next to its licence; pack pictures no other companion will get stay there. Never delete a master or a picture that can't be regenerated: move it to the archive. The archive is never exported to a client.
 - Don't commit what a build can generate, such as smaller sizes of a master (`face-192`, `face-32`); generate them from the master, and don't archive them.
-- Every exported copy (share cards, add-on, Android, docs, gallery) is generated from its master by the exporters and hash-checked in CI; never commit a hand-made copy. Overwrite copies when their master changes, and delete a copy nothing uses, with its references; git history keeps old files. Generated copies are checked in only where a client's build still needs them; the goal is for every build to fetch them from AnkiQuest-Server instead, so binaries live in one repository.
+- The masters and the archive are to move to their own repository, AnkiQuest-Art (coming), which the code repositories take as a git submodule, so no code repository checks in art (hill, 2026-11-21). Until then they live in AnkiQuest-Server as described here.
+- Exported copies are never archived: when a master changes the exporters overwrite its copies, and a copy nothing uses is deleted; git history keeps the old bytes (hill, 2026-11-21).
+- Every exported copy (share cards, add-on, Android, docs, gallery) is generated from its master by the exporters and hash-checked in CI; never commit a hand-made copy. Generated copies are checked in only where a client's build still needs them; the goal is for every build to generate them from AnkiQuest-Art, so art is checked in only there.
 - The gallery (AnkiQuest.github.io) shows the matrix of all companions and poses, a page per companion with what it is missing and why, the licence of every picture, and the archive in a section of its own.
 
 ## Writing
