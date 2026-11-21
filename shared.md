@@ -39,7 +39,7 @@ When a decision or action is left for hill, ask hill a question with the options
 ## Glossary
 
 - Companion: a character (Aki, Ankilope, Bluma, Anki-tan).
-- Pose: one picture of a companion. Its master is `static/<companion>/<pose>.png` in AnkiQuest-Server; every other copy (Android drawable, add-on art, share card) is an exported copy of that pose, generated and hash-checked. The goal is every pose drawn for every companion (see Companion art).
+- Pose: one picture of a companion. Its master is `<companion>/<pose>.png` in AnkiQuest-Art; every other copy (Android drawable, add-on art, share card) is an exported copy of that pose, generated and hash-checked. The goal is every pose drawn for every companion (see Companion art).
 - Mood: today's streak state, computed by the shared rule in `tests/fixtures/streak_moods.json`. Each mood names the pose it shows; several moods may show the same pose (`frozen_1` and `thawing` both show `frozen`). That is a mapping, not a fallback.
 - Moment: something that happened worth telling (milestone, level up, place, deck conquered), shown as a card.
 - Share: send a moment, board place or deck to friends in AnkiQuest or to another app. Don't say "shareable".
@@ -135,7 +135,7 @@ Every AnkiQuest repository is under the AGPL wherever its upstream allows it (hi
 - In forks, upstream code keeps its licence and notices. Our additions are AGPL-3.0-or-later where upstream's licence allows combining them: GPL-3.0 and AGPL-3.0 do (GPLv3 section 13). With a permissive upstream (MIT, BSD, Apache-2.0), our files are AGPL-3.0-or-later and upstream's notices stay.
 - Branches meant for upstream (`ankiquest-support`, `ankidroid-provider-check`, the `upstream/*` pull request branches) use upstream's licence.
 - Exception: the API library that third-party apps link (`api/` in AnkiQuest-Android, published as `org.ankiquest:api`) stays LGPL-3.0-or-later, AnkiDroid's licence for it, so apps under any licence can use it. Our changes to it are LGPL-3.0-or-later too; never move AGPL code into it.
-- Poses keep the licence of their masters: Anki-tan's are CC BY-SA 4.0 (`static/anki-tan/LICENSE` in AnkiQuest-Server, by Shigeyuki), the other companions' fall under AnkiQuest-Server's licence. Don't change the licensing of a pose; that is hill's decision.
+- Poses keep the licence of their masters: Anki-tan's are CC BY-SA 4.0 (`anki-tan/LICENSE` in AnkiQuest-Art, by Shigeyuki), the other companions' are AGPL-3.0-or-later (AnkiQuest-Art's `LICENSE`). Don't change the licensing of a pose; that is hill's decision.
 - SPDX headers (`SPDX-License-Identifier: AGPL-3.0-or-later`) go in new files where the repository already uses them, such as AnkiQuest-Android. Don't add or change headers in upstream files in bulk.
 
 ## Desktop and Android parity
@@ -164,10 +164,10 @@ The art is a matrix: companions by poses. The goal is a full matrix: every pose 
 
 ### Masters, archive and exported copies
 
-- Masters live only in `static/<companion>/` in AnkiQuest-Server, one file per pose.
-- `static/archive/` holds every picture that is no longer a current master: `static/archive/<companion>/` for masters that were replaced, redrawn or retired, and `static/archive/anki-tan-pack/` for Shigeyuki's source pack, next to its licence; pack pictures no other companion will get stay there. Never delete a master or a picture that can't be regenerated: move it to the archive. The archive is never exported to a client.
+- Masters live only in AnkiQuest-Art, `<companion>/<pose>.png`, one file per pose, listed in its `manifest.json`.
+- AnkiQuest-Art's `archive/` holds every picture that is no longer a current master: `archive/<companion>/` for masters that were replaced, redrawn or retired, and `archive/anki-tan-pack/` for Shigeyuki's source pack, next to its licence; pack pictures no other companion will get stay there. Never delete a master or a picture that can't be regenerated: move it to the archive. The archive is never exported to a client.
 - Don't commit what a build can generate, such as smaller sizes of a master (`face-192`, `face-32`); generate them from the master, and don't archive them.
-- The masters and the archive are to move to their own repository, AnkiQuest-Art (coming), which the code repositories take as a git submodule, so no code repository checks in art (hill, 2026-11-21). Until then they live in AnkiQuest-Server as described here.
+- Code repositories take AnkiQuest-Art as a git submodule (`art/`) and check in no art (hill, 2026-11-21).
 - Exported copies are never archived: when a master changes the exporters overwrite its copies, and a copy nothing uses is deleted; git history keeps the old bytes (hill, 2026-11-21).
 - Every exported copy (share cards, add-on, Android, docs, gallery) is generated from its master by the exporters and hash-checked in CI; never commit a hand-made copy. Generated copies are checked in only where a client's build still needs them; the goal is for every build to generate them from AnkiQuest-Art, so art is checked in only there.
 - The gallery (AnkiQuest.github.io), built from AnkiQuest-Server's `art-coverage --json`, shows the matrix of all companions and poses, a page per companion with what it is missing and why, the licence of every picture, and the archive in a section of its own.
