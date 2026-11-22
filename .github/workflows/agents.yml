@@ -13,6 +13,13 @@ on:
 permissions:
   contents: read
 
+# A newer push to a pull request replaces its run; pushes to master (which
+# dispatch to AnkiQuest-Sync) and merge queue entries each keep theirs.
+# Docs-only changes still run: the check reads shared.md and repos/*.md.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   # AnkiQuest-Dev's shared Nix check: the flake check (formatting
   # included), actionlint, and the split point below in the dev shell.
