@@ -13,16 +13,18 @@ Open a pull request here; it merges under the shared rules. Never edit `AGENTS.m
 
 AnkiQuest-Sync's `agents` job runs daily, on demand, and when this repository's `master` changes (a `repository_dispatch` of type `agents-changed`, sent by `.github/workflows/agents.yml`). For each repository in its `TARGETS` map it writes:
 
-- `AGENTS.md` = `shared.md`, a blank line, `repos/<repository>.md`.
-- `CLAUDE.md` = `@AGENTS.md`. A fork whose upstream has its own `CLAUDE.md` keeps it, with `@AGENTS.md` added as its first line.
+- `AGENTS.md` = `shared.md`, a blank line, `repos/<repository>.md`. In a fork, an "Upstream guidance" section follows: upstream's own `CLAUDE.md` and `AGENTS.md`, verbatim, at the upstream commit the fork last merged (pointer files such as `@AGENTS.md` and duplicates left out).
+- `CLAUDE.md` = `@AGENTS.md`.
 
-If either differs from the repository's branch, the job pushes branch `agents-sync` there and opens or updates one pull request, "Update AGENTS.md from AnkiQuest-Agents".
+If either differs from the repository's branch, the job pushes branch `agents-sync` there and opens or updates one pull request, `chore(agents): update AGENTS.md from AnkiQuest-Agents`. When upstream changes its guidance, the fork's sync pull request (`sync/<owner>/<repo>`) brings the new text, regenerated in the merge.
 
 To generate one by hand:
 
 ```sh
 { cat shared.md; echo; cat repos/AnkiQuest-Android.md; } > AGENTS.md
 ```
+
+AnkiQuest-Sync's `tools/fork-sync agents` does the same and adds the upstream guidance.
 
 ## Adding a repository
 
