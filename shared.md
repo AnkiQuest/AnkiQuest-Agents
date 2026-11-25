@@ -149,6 +149,7 @@ AnkiQuest has two clients: the Android app ([AnkiQuest/AnkiQuest-Android](https:
 
 - A user-facing feature or behaviour change lands on both clients, unless the platform can't do it (home-screen widgets, for example). Do both in one go when you can. Otherwise open an issue in the other repository, labelled `parity`, and link it from the PR.
 - Rules both clients compute (streak verdicts, heatmap, card labels, deck names) are defined once, as cases in `tests/fixtures/*.json` in [AnkiQuest/AnkiQuest-Server](https://github.com/AnkiQuest/AnkiQuest-Server/tree/master/tests/fixtures). Both clients test against the same cases. Change the fixture first, then both implementations.
+- Clients test against AnkiQuest-Server `master`: their CI fetches its `tests/fixtures/*.json` and `docs/api/examples/*.json` when the tests run, and no client pins or copies them. A server change that breaks a client's tests is fixed in the same change, or the client is updated right after. An example a client doesn't read yet doesn't fail its tests.
 - Use the same names, wording and order for the same thing on both clients.
 - When you find a gap between the clients, open a `parity` issue for it.
 
