@@ -22,7 +22,8 @@ concurrency:
 
 jobs:
   # AnkiQuest-Dev's shared Nix check: the flake check (formatting
-  # included), actionlint, and the split point below in the dev shell.
+  # included), actionlint, zizmor (rules in .github/zizmor.yml) and the
+  # split point below in the dev shell.
   # shared.md has no "This repository" heading; each section starts with
   # it and has no other second-level heading.
   check:
@@ -30,6 +31,7 @@ jobs:
     with:
       format: ""
       actionlint: true
+      zizmor: true
       timeout-minutes: 10
       run: |
         status=0
