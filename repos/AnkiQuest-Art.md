@@ -6,4 +6,4 @@ AnkiQuest-Art holds every companion picture: the masters, the archive, `manifest
 - **Archive.** A picture nothing uses moves to `archive/<companion>/` with an entry in `manifest.json`'s `archive.retired` and in that folder's README (where it came from, SHA-256). Never delete a picture.
 - **Exports** are made only by `tools/art-export` and published by the release workflow as `art-<N>`. Never commit an exported copy.
 - **Checks to run** before pushing: `cargo run --locked --manifest-path tools/art-check/Cargo.toml -- .` and `cargo test` in each tool.
-- **Releases** reach the other repositories through AnkiQuest-Sync; a change here shows up there as a "Use AnkiQuest-Art" pull request.
+- **Releases** reach the other repositories through AnkiQuest-Sync; a change here shows up there as a `chore(art): use AnkiQuest-Art <tag>` pull request.
