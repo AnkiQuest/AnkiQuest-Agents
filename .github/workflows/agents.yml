@@ -25,7 +25,8 @@ jobs:
   # included), actionlint, zizmor (rules in .github/zizmor.yml) and the
   # split point below in the dev shell.
   # shared.md has no "This repository" heading; each section starts with
-  # it and has no other second-level heading.
+  # it and has no other second-level heading. upstream.md has no heading
+  # (AnkiQuest-Sync adds "## Upstream guidance") and names {upstream}.
   check:
     uses: AnkiQuest/AnkiQuest-Dev/.github/workflows/nix-check.yml@master
     with:
@@ -45,6 +46,10 @@ jobs:
             status=1
           fi
         done
+        if grep -q '^#' upstream.md || ! grep -qF '{upstream}' upstream.md; then
+          echo "::error file=upstream.md::Must have no heading and contain '{upstream}'."
+          status=1
+        fi
         exit $status
 
   dispatch:

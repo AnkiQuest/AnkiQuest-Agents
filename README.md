@@ -4,6 +4,7 @@ The source of the agent instructions (`AGENTS.md`) in every AnkiQuest repository
 
 - `shared.md`: the rules for all repositories.
 - `repos/<repository>.md`: one repository's `## This repository` section, named after the repository (`repos/AnkiQuest-Android.md` for AnkiQuest/AnkiQuest-Android).
+- `upstream.md`: the introduction of a fork's "Upstream guidance" section; `{upstream}` stands for the upstream's `owner/repo`.
 
 ## Changing a rule
 
@@ -13,10 +14,10 @@ Open a pull request here; it merges under the shared rules. Never edit `AGENTS.m
 
 AnkiQuest-Sync's `agents` job runs daily, on demand, and when this repository's `master` changes (a `repository_dispatch` of type `agents-changed`, sent by `.github/workflows/agents.yml`). For each repository in its `TARGETS` map it writes:
 
-- `AGENTS.md` = `shared.md`, a blank line, `repos/<repository>.md`. In a fork, an "Upstream guidance" section follows: upstream's own `CLAUDE.md` and `AGENTS.md`, verbatim, at the upstream commit the fork last merged (pointer files such as `@AGENTS.md` and duplicates left out).
+- `AGENTS.md` = `shared.md`, a blank line, `repos/<repository>.md`. In a fork (a repository in AnkiQuest-Sync's `forks.json`), an "Upstream guidance" section follows: `upstream.md`, then upstream's own `CLAUDE.md` and `AGENTS.md`, verbatim, at the newest upstream commit the fork's branch has merged (pointer files such as `@AGENTS.md` and duplicates left out). Our rules come first and override upstream's.
 - `CLAUDE.md` = `@AGENTS.md`.
 
-If either differs from the repository's branch, the job pushes branch `agents-sync` there and opens or updates one pull request, `chore(agents): update AGENTS.md from AnkiQuest-Agents`. When upstream changes its guidance, the fork's sync pull request (`sync/<owner>/<repo>`) brings the new text, regenerated in the merge.
+If either differs from the repository's branch, the job pushes the commit `chore(agents): update AGENTS.md from AnkiQuest-Agents` to that branch: the rules were reviewed here. Only a refused push goes to a pull request from branch `agents-sync`, which merges by itself once its checks pass. When upstream changes its guidance, the fork's sync pull request (`sync/<owner>/<repo>`) brings the new text, written in the merge; once it is merged, the `agents` job writes the same text.
 
 To generate one by hand:
 
