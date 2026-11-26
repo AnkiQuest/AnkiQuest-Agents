@@ -1,0 +1,1 @@
+[{upstream}](https://github.com/{upstream})'s own instructions, kept verbatim. The rules above override them; where they don't, they apply to upstream's code. AnkiQuest-Sync copies them from the upstream commit `master` last merged; don't edit them here.
